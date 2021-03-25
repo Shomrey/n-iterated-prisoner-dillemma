@@ -1,7 +1,7 @@
 class Prisoner:
 
-  def __init__(self, index):
-    self.index = index
+  def __init__(self, id):
+    self.id = id
     self.total_payoff = 0
 
   # Return the action chosen for next round

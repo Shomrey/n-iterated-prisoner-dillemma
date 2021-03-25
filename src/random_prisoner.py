@@ -4,8 +4,8 @@ from random import random
 
 class RandomPrisoner(Prisoner):
 
-  def __init__(self, index, cooperation_chance):
-    super().__init__(index)
+  def __init__(self, id, cooperation_chance):
+    super().__init__(id)
     self.cooperation_chance = cooperation_chance
 
   def choose_action(self):

@@ -9,20 +9,25 @@ class NIPRGame:
     self.rounds = 0
 
   def get_payoffs(self, actions):
-    cooperators = actions.count("C")
-    payoffs = []
-    for action in actions:
-      if action == "C": # Cooperated
-        payoffs.append((cooperators - 1) * 2)
-      else: # Defected
-        payoffs.append(cooperators * 2 + 1)
+    cooperators = list(actions.values()).count("C")
+    payoffs = {}
+    for prisoner in self.prisoners:
+      payoff = self.get_payoff(actions[prisoner.id], cooperators)
+      payoffs[prisoner.id] = payoff
     return payoffs
 
+  def get_payoff(self, action, cooperators):
+    if action == "C":
+      return (cooperators - 1) * 2
+    else:
+      return cooperators * 2 + 1
+
   def simulate_round(self):
-    actions = [p.choose_action() for p in self.prisoners]
-    payoffs = tuple(self.get_payoffs(actions))
-    for prisoner, payoff in zip(self.prisoners, payoffs):
-      prisoner.receive_payoff(payoff)
+    actions = { p.id: p.choose_action()
+                for p in self.prisoners }
+    payoffs = self.get_payoffs(actions)
+    for prisoner in self.prisoners:
+      prisoner.receive_payoff(payoffs[prisoner.id])
       prisoner.update(actions)
     self.rounds += 1
 
