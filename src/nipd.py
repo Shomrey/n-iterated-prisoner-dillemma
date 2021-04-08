@@ -3,9 +3,8 @@ import numpy as np
 
 class NIPDGame:
 
-  def __init__(self, player_count):
-    self.prisoners = [RandomPrisoner(i, p)
-                      for i, p in zip(range(player_count), np.linspace(0, 1, player_count))]
+  def __init__(self, prisoners):
+    self.prisoners = prisoners
     self.rounds = 0
 
   def get_payoffs(self, actions):
@@ -36,11 +35,12 @@ class NIPDGame:
       self.simulate_round()
 
   def average_payoffs(self):
-    return [p.total_payoff / self.rounds for p in self.prisoners]
+    return { p.id: p.total_payoff / self.rounds for p in self.prisoners }
 
 
 def main():
-  game = NIPDGame(10)
+  game = NIPDGame([RandomPrisoner(i, p)
+                   for i, p in enumerate(np.linspace(0, 1, 10))])
   game.simulate_rounds(100000)
   print(game.average_payoffs())
 
