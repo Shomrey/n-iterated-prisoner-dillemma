@@ -1,7 +1,7 @@
 from random_prisoner import RandomPrisoner
 import numpy as np
 
-class NIPRGame:
+class NIPDGame:
 
   def __init__(self, player_count):
     self.prisoners = [RandomPrisoner(i, p)
@@ -40,7 +40,7 @@ class NIPRGame:
 
 
 def main():
-  game = NIPRGame(10)
+  game = NIPDGame(10)
   game.simulate_rounds(100000)
   print(game.average_payoffs())
 
