@@ -7,5 +7,9 @@ class Strategy:
     self.factory = factory
     self.name = name
 
+  # important that id is unique in whole game!
   def make_prisoner(self, id):
     return self.factory(id)
+
+  def get_name(self):
+    return self.name
