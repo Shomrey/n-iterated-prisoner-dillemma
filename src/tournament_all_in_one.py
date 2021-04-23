@@ -54,10 +54,23 @@ class Tournament_all_in_one:
         return winning_strategies
 
     def get_winner_by_mean(self):
-        #TODO
-        return 0
+        strategy_results = {}
+        for participant in self._participants:
+            strategy_results[participant.strategy.get_name()] = 0
+        for prisoner in self._result_matrix:
+            strategy_results[prisoner.get_type()] += self._result_matrix[prisoner]
+        analyzis_results = list(strategy_results.values())
+        max_value = max(analyzis_results)
+        winners = []
+        for participant in strategy_results:
+            if strategy_results[participant] == max_value:
+                winners.append(participant)
+        #winning_strategies = [winner.get_type() for winner in winners]
+        winning_strategies = list(dict.fromkeys(winners))
+        return winning_strategies
 
 if __name__ == "__main__":
   t = Tournament_all_in_one([RandomPrisoner.strategy(p) for p in np.linspace(0, 1, 5)], 1000, 4)
   t.run()
   print(t.get_winner_by_value())
+  print(t.get_winner_by_mean())

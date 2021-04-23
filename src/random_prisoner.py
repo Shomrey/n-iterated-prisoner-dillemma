@@ -16,7 +16,8 @@ class RandomPrisoner(Prisoner):
                     RandomPrisoner.prisoner_type.format(cooperation_chance))
 
   def choose_action(self):
-    return 'C' if random() <= self.cooperation_chance else 'D'
+    random_val = random()
+    return 'C' if  random_val <= self.cooperation_chance else 'D'
 
   def get_type(self):
     return self._prisoner_type

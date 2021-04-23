@@ -1,5 +1,7 @@
 from nipd import NIPDGame
 from random_prisoner import RandomPrisoner
+from basic_emotion_prisoner import BasicEmotionPrisoner
+from copy_prisoner import CopyPrisoner
 import numpy as np
 import matplotlib.pyplot as plt
 from participant import Participant
@@ -68,8 +70,11 @@ class Tournament_round_robin:
 
 
 if __name__ == "__main__":
-  t = Tournament_round_robin([RandomPrisoner.strategy(p) for p in np.linspace(0, 1, 5)], 1000, 4)
+  participants = [RandomPrisoner.strategy(p) for p in np.linspace(0, 1, 5)]
+  participants.append(BasicEmotionPrisoner.strategy(1.0))
+  participants.append(CopyPrisoner.strategy())
+  t = Tournament_round_robin(participants, 10, 4)
   t.run()
-  for result in t.get_results_raw():
-    print(result[0].strategy.get_name())
+  #for result in t.get_results_raw():
+    #print(result[0].strategy.get_name())
   t.plot_result_matrix()
