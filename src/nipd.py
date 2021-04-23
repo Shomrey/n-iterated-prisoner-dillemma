@@ -28,6 +28,7 @@ class NIPDGame:
     for prisoner in self.prisoners:
       prisoner.receive_payoff(payoffs[prisoner.id])
       prisoner.update(actions)
+      #print(actions)
     self.rounds += 1
 
   def simulate_rounds(self, rounds):
