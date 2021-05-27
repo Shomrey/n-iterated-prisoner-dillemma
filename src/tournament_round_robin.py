@@ -3,6 +3,8 @@ from random_prisoner import RandomPrisoner
 from basic_emotion_prisoner import BasicEmotionPrisoner
 from copy_prisoner import CopyPrisoner
 from qlearning_prisoner import QLearningPrisoner
+from qlearning_emotion_prisoner import QLearningEmotionPrisoner
+from qlearning_extended_prisoner import QLearningExtendedPrisoner
 import numpy as np
 import matplotlib.pyplot as plt
 from participant import Participant
@@ -71,11 +73,15 @@ class Tournament_round_robin:
 
 
 if __name__ == "__main__":
+  prisoners_per_strategy = 4
   participants = [RandomPrisoner.strategy(p) for p in np.linspace(0, 1, 5)]
   #participants = []
-  participants.append(RandomPrisoner.strategy(0.5))
+  participants.append(BasicEmotionPrisoner.strategy(0.8))
+  #participants.append(CopyPrisoner.strategy())
   participants.append(QLearningPrisoner.strategy())
-  t = Tournament_round_robin(participants, 1000, 1)
+  participants.append(QLearningEmotionPrisoner.strategy())
+  participants.append(QLearningExtendedPrisoner.strategy( (len(participants)+1)*prisoners_per_strategy ))
+  t = Tournament_round_robin(participants, 1000, prisoners_per_strategy)
   t.run()
   #for result in t.get_results_raw():
     #print(result[0].strategy.get_name())
