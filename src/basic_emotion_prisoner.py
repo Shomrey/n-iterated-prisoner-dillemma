@@ -28,10 +28,14 @@ class BasicEmotionPrisoner(Prisoner):
         C = 0.0
         D = 0.0
         number_of_players = 0.0
-        for action in actions:
-            if actions[action] == 'C':
+        for player in actions:
+            if player == self.id:
+                continue
+
+            if actions[player] == 'C':
                 C += 1
             else:
                 D += 1
             number_of_players += 1
+
         self._emotion += (((C-D)/number_of_players) * self._emotion_multiplier)
