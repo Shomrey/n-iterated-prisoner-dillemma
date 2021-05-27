@@ -69,6 +69,29 @@ class Tournament_round_robin:
 
     plt.show()
 
+  def get_mean_payoffs(self):
+    ret = {}
+    for p in self._participants:
+      ret[p] = np.mean([self._result_matrix[p, q] for q in self._participants])
+    return ret
+
+  def plot_result_scatter(self):
+    matrix = [(i.strategy.name, self._result_matrix[i, j])
+              for i in self._participants
+              for j in self._participants]
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    cax = ax.scatter([x[0] for x in matrix], [x[1] for x in matrix], s = 2)
+
+    means = self.get_mean_payoffs()
+    ax.scatter([p.strategy.name for p in self._participants], [means[p] for p in self._participants], s = 200, marker = "_")
+
+    ax.set_xlabel("player")
+    ax.set_ylabel("payoffs")
+    plt.xticks(rotation = 70)
+    fig.tight_layout()
+
+    plt.show()
 
 
 
@@ -86,3 +109,4 @@ if __name__ == "__main__":
   #for result in t.get_results_raw():
     #print(result[0].strategy.get_name())
   t.plot_result_matrix()
+  t.plot_result_scatter()
